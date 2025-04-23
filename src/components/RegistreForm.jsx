@@ -1,15 +1,33 @@
+import { useForm } from "react-hook-form";
 const RegistreForm = () => {
+  const form = useForm();
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  console.log(register);
+  const handlForm = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="m-auto mt-[154px] max-w-[393px]">
       <h2 className="mb-[38px] font-bold text-[30px]">Sign up</h2>
-      <form>
+      <form onSubmit={handleSubmit(handlForm)}>
         <div className="flex flex-col">
-          <label htmlFor="email">Name</label>
+          <label htmlFor="name">Name</label>
           <input
             className="mt-[6px] pl-[16px] border-[#D8DADC] border-[1px] focus:border-[#46A56C] rounded-[10px] focus:outline-none max-w-[353px] min-h-[56px]"
-            type="email"
+            type="text"
             placeholder="Enter Your Name"
-            id="email"
+            id="name"
+            {...register("userName", {
+              required: "UserName is requred",
+            })}
           />
         </div>
         <div className="flex flex-col mt-[22px]">
@@ -19,15 +37,21 @@ const RegistreForm = () => {
             type="email"
             placeholder="example@gmail.com"
             id="email"
+            {...register("Email", {
+              required: "Email is requred",
+            })}
           />
         </div>
         <div className="flex flex-col mt-[22px]">
-          <label htmlFor="email">Create a password</label>
+          <label htmlFor="password">Create a password</label>
           <input
             className="mt-[6px] pl-[16px] border-[#D8DADC] border-[1px] focus:border-[#46A56C] rounded-[10px] focus:outline-none max-w-[353px] min-h-[56px]"
-            type="email"
+            type="password"
             placeholder="must be 8 characters"
-            id="email"
+            id="password"
+            {...register("password", {
+              required: "password is requred",
+            })}
           />
         </div>
         <button
