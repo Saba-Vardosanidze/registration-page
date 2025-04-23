@@ -18,20 +18,28 @@ const RegistreForm = () => {
     register,
     handleSubmit,
     setError,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(schema),
   });
 
   const handlForm = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log(data);
-    } catch (error) {
-      setError("root", {
-        message: "Here is Some Erorr",
+    fetch("https://6807cb21942707d722dc723c.mockapi.io/feedBack", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to Sand Feedback");
+        }
+        return res.json();
+      })
+      .then((responseData) => {
+        console.log(responseData);
+        reset();
       });
-    }
   };
 
   return (
